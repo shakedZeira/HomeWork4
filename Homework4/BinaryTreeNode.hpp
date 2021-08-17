@@ -3,6 +3,59 @@
 #include <string>
 using namespace std;
 
+class BSNode
+{
+private:
+	string data;
+	BSNode* leftSon;
+	BSNode* rightSon;
+	int count;
+public:
+	BSNode()
+	{
+		data = "";
+		leftSon = NULL;
+		rightSon = NULL;
+		count = 0;
+	}
+	void SetNodeData(string newData);
+	BSNode NewNode(string newData);
+	bool isLeaf();
+	bool HasRightSon();
+	bool HasLeftSon();
+	bool IsEmpty();
+	string GetNodeData();
+	BSNode GetRightSon();
+	BSNode GetLeftSon();
+	void SetRightSonData(string newdata);
+	void SetLeftSonData(string newdata);
+	//BSNode AddRightSon(BSNode existingNode,BSNode newNode);
+	//BSNode AddLeftSon(BSNode existingNode,BSNode newNode);
+	BSNode AddSon(BSNode existingNode, BSNode newNode);
+	BSNode FindNode(BSNode existingNode, string value);
+	BSNode DeleteNode(BSNode existingNode, string value);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
 struct Node
 {
 	string data;
@@ -152,3 +205,4 @@ public:
 		}
 	}
 };
+*/
