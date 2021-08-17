@@ -186,15 +186,29 @@ BSTree BSTree::AddLeftSon(BSNode newNode)
 	root->AddLeftSon(*root, newNode);
 }
 */
-BSTree BSTree::AddSon(BSNode newNode)
+BSNode BSTree::GetRoot()
 {
-	root->AddSon(*root, newNode);
+	return *root;
 }
-BSTree BSTree::FindNode(string value)
+BSNode BSTree::AddSon(BSNode newNode)
 {
-	root->FindNode(*root, value);
+	return root->AddSon(*root, newNode);
 }
-BSTree BSTree::DeleteNode(string value)
+BSNode BSTree::FindNode(string value)
 {
-	root->DeleteNode(*root, value);
+	return root->FindNode(*root, value);
+}
+BSNode BSTree::DeleteNode(string value)
+{
+	return root->DeleteNode(*root, value);
+}
+
+
+int main()
+{
+	BSTree Tree = BSTree();
+	BSNode Node = BSNode();
+	Node.SetNodeData("aa");
+	Tree.AddSon(Node);
+	cout<<"Root :" << Tree.GetRoot().GetNodeData()<<endl;
 }

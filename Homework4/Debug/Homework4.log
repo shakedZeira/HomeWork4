@@ -1,0 +1,5 @@
+﻿  BinarySearchTree.cpp
+C:\Users\shake\source\repos\Homework4\Homework4\BinarySearchTree.cpp(122): warning C4715: 'BSNode::AddSon': not all control paths return a value
+C:\Users\shake\source\repos\Homework4\Homework4\BinarySearchTree.cpp(142): warning C4715: 'BSNode::FindNode': not all control paths return a value
+C:\Users\shake\source\repos\Homework4\Homework4\BinarySearchTree.cpp(177): warning C4715: 'BSNode::DeleteNode': not all control paths return a value
+  Homework4.vcxproj -> C:\Users\shake\source\repos\Homework4\Debug\Homework4.exe

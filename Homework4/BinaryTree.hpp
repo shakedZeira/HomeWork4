@@ -16,7 +16,8 @@ public:
 	//פעולת אתחול?
 	//BSTree AddRightSon(BSNode newNode);
 	//BSTree AddLeftSon(BSNode newNode);
-	BSTree AddSon(BSNode newNode);
-	BSTree FindNode(string Value);
-	BSTree DeleteNode(string value);
+	BSNode GetRoot();
+	BSNode AddSon(BSNode newNode);
+	BSNode FindNode(string Value);
+	BSNode DeleteNode(string value);
 };
