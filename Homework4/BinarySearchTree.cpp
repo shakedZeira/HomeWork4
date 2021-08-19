@@ -5,10 +5,10 @@ void BSNode::SetNodeData(string newData)
 {
 	data = newData;
 }
-BSNode BSNode::NewNode(string newData)
+BSNode* BSNode::NewNode(string newData)
 {
-	BSNode NewNodeElement = BSNode();
-	NewNodeElement.SetNodeData(newData);
+	BSNode* NewNodeElement =  new BSNode();
+	(*NewNodeElement).SetNodeData(newData);
 	return NewNodeElement;
 }
 bool BSNode::isLeaf()
@@ -75,8 +75,8 @@ void BSNode::SetLeftSonData(string newData)
 {
 	leftSon->SetNodeData(newData);
 }
-//need to check!!!
 /*
+//first mission in the presention
 BSNode BSNode::AddRightSon(BSNode existingElement,BSNode newNodeElement)
 {
 	if (existingElement.GetRightSon().GetNodeData() != newNodeElement.GetNodeData())
@@ -104,79 +104,108 @@ BSNode BSNode::AddLeftSon(BSNode existingElement,BSNode newNodeElement)
 	}
 }
 */
-//need to check!!
-BSNode BSNode::AddSon(BSNode existingNode , BSNode newNode)
+BSNode* BSNode::AddSon(BSNode *existingNode ,string newdata)
 {
-	if (existingNode.IsEmpty())
+	if (existingNode == NULL)
 	{
-		return NewNode(newNode.GetNodeData());
+		existingNode = NewNode(newdata);
+		return existingNode;
 	}
-	else if (existingNode.GetNodeData() > newNode.GetNodeData())
+	else if (existingNode->data > newdata)
 	{
-		existingNode.GetLeftSon() = AddSon(existingNode.GetLeftSon(), newNode);
+		existingNode->leftSon = AddSon(existingNode->leftSon, newdata);
 	}
 	else
 	{
-		existingNode.GetRightSon() = AddSon(existingNode.GetRightSon(), newNode);
+		existingNode->rightSon = AddSon(existingNode->rightSon, newdata);
 	}
 }
-//pointer?
-BSNode BSNode::FindNode(BSNode existingNode ,string value)
+BSNode* BSNode::FindNode(BSNode* existingNode ,string value)
 {
-	if (existingNode.GetNodeData() == value)
+	
+	if (existingNode->data == value)
 	{
 		return existingNode;
 	}
-	else if (existingNode.GetNodeData() > value)
+	else if (existingNode->data > value)
 	{
-		FindNode(existingNode.GetLeftSon(), value);
+		if (existingNode->leftSon != NULL)
+		{
+			FindNode(existingNode->leftSon, value);
+		}
 	}
-	else if(existingNode.GetNodeData() < value)
+	else if(existingNode->data < value)
 	{
-		FindNode(existingNode.GetRightSon(), value);
+		if (existingNode->rightSon != NULL)
+		{
+			FindNode(existingNode->rightSon, value);
+		}
 	}
 	else
 	{
 		cout << "the value isnt in the Tree" << endl;
 	}
 }
-BSNode BSNode::DeleteNode(BSNode existingNode, string value)
+//changing
+void BSNode::search(BSNode* root, string toFindData)
 {
-	//finding the elemet to delete
+	BSNode* temp = new BSNode();
+	temp = root;
+	while (temp != NULL)
+	{
+		if (temp->data == toFindData)
+		{
+			cout << temp->data << endl;
+			return;
+		}
+		else if(temp->data > toFindData)
+		{
+			temp = temp->leftSon;
+		}
+		else
+		{
+			temp = temp->rightSon;
+		}
+	}
+}
+BSNode* BSNode::DeleteNode(BSNode *existingNode, string value) //need to fix
+{
+	//finding the element to delete
 	existingNode = FindNode(existingNode, value);
-	if (existingNode.isLeaf())
+	if (existingNode->leftSon == NULL && existingNode->rightSon == NULL)
 	{
 		//need to do
-		//delete *existingNode;
+		delete existingNode;
 	}
-	else if (!existingNode.HasLeftSon())
+	else if (!existingNode->leftSon)
 	{
-		BSNode temp = existingNode.GetRightSon();
+		BSNode temp = *existingNode->rightSon;
 		//need to do
-		//delete existingNode;
-		return temp;
+		delete existingNode;
+		return &temp;
 	}
-	else if(!existingNode.HasRightSon())
+	else if(!existingNode->rightSon)
 	{
-		BSNode temp = existingNode.GetLeftSon();
+		BSNode temp = *existingNode->leftSon;
 		//need to do
-		//delete existingNode;
-		return temp;
+		delete existingNode;
+		return &temp;
 	}
 	else
 	{
-		BSNode temp = existingNode;
+		BSNode temp = *existingNode;
 		while ((!temp.IsEmpty()) && temp.HasLeftSon())
 		{
 			temp = temp.GetLeftSon();
 		}
-		existingNode.SetNodeData(temp.GetNodeData());
-		existingNode.GetRightSon() = DeleteNode(existingNode.GetRightSon(), temp.GetNodeData());
+		existingNode->SetNodeData(temp.GetNodeData());
+		existingNode->rightSon = (DeleteNode(existingNode->rightSon, temp.GetNodeData()));
 		return existingNode;
 	}
 }
 //////////////////////////Binary Tree Class/////////////////
 /*
+* //first mission in the presention
 BSTree BSTree::AddRightSon(BSNode newNode)
 {
 	root->AddRightSon(*root, newNode);
@@ -190,25 +219,43 @@ BSNode BSTree::GetRoot()
 {
 	return *root;
 }
-BSNode BSTree::AddSon(BSNode newNode)
+BSNode* BSTree::AddSon(string newdata)
 {
-	return root->AddSon(*root, newNode);
+	return root->AddSon(root, newdata);
 }
-BSNode BSTree::FindNode(string value)
+BSNode* BSTree::FindNode(string value)
 {
-	return root->FindNode(*root, value);
+	return root->FindNode(root, value);
 }
-BSNode BSTree::DeleteNode(string value)
+BSNode* BSTree::DeleteNode(string value) //need to fix
 {
-	return root->DeleteNode(*root, value);
+	return root->DeleteNode(root, value);
 }
-
-
-int main()
+void initlizeTree()
 {
 	BSTree Tree = BSTree();
 	BSNode Node = BSNode();
-	Node.SetNodeData("aa");
-	Tree.AddSon(Node);
-	cout<<"Root :" << Tree.GetRoot().GetNodeData()<<endl;
+	Node.SetNodeData("b");
+	Node.AddSon(&Node, "c");
+	Node.AddSon(&Node, "a");
+	bool hasleftSon = Node.HasLeftSon();
+	bool IsLeaf = Node.isLeaf();
+	cout << hasleftSon << endl;
+	cout << IsLeaf << endl;
+	cout << "Data: " << Node.GetNodeData() << endl;
+	cout << "Data left son: " << Node.GetLeftSon().GetNodeData() << endl;
+	cout << "Data right son: " << Node.GetRightSon().GetNodeData() << endl;
+	cout << "Find Node: " << Node.FindNode(&Node, "b")->GetNodeData() << endl;
+	//need to fix deleted node
+	//cout << "Deleted Node: " << Node.DeleteNode(&Node, "c");
+	BSNode root = *Tree.AddSon("a");
+	root.AddSon(&root, "b");
+	cout << "data : " << root.GetNodeData() << endl;
+	cout << "Right son data: " << root.GetRightSon().GetNodeData() << endl;
+	cout<<"Node found: ";
+	root.search(&root, "a");
+}
+int main()
+{
+	initlizeTree();
 }

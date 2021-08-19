@@ -13,13 +13,13 @@ private:
 public:
 	BSNode()
 	{
-		data = "";
+		data = " ";
 		leftSon = NULL;
 		rightSon = NULL;
 		count = 0;
 	}
 	void SetNodeData(string newData);
-	BSNode NewNode(string newData);
+	BSNode* NewNode(string newData);
 	bool isLeaf();
 	bool HasRightSon();
 	bool HasLeftSon();
@@ -31,9 +31,9 @@ public:
 	void SetLeftSonData(string newdata);
 	//BSNode AddRightSon(BSNode existingNode,BSNode newNode);
 	//BSNode AddLeftSon(BSNode existingNode,BSNode newNode);
-	BSNode AddSon(BSNode existingNode, BSNode newNode);
-	BSNode FindNode(BSNode existingNode, string value);
-	BSNode DeleteNode(BSNode existingNode, string value);
+	BSNode* AddSon(BSNode *existingNode , string newdata);
+	BSNode* DeleteNode(BSNode *existingNode, string value);
+	void search(BSNode* existingNode, string value);
 };
 
 

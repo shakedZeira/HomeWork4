@@ -17,7 +17,7 @@ public:
 	//BSTree AddRightSon(BSNode newNode);
 	//BSTree AddLeftSon(BSNode newNode);
 	BSNode GetRoot();
-	BSNode AddSon(BSNode newNode);
-	BSNode FindNode(string Value);
-	BSNode DeleteNode(string value);
+	BSNode* AddSon(string newdata);
+	BSNode* FindNode(string Value);
+	BSNode* DeleteNode(string value);
 };
